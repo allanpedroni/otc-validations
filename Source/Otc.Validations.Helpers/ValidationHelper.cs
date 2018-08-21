@@ -17,9 +17,12 @@ namespace Otc.Validations.Helpers
         {
             if (!ModelValidator.TryValidate(model, out IEnumerable<ValidationResult> errors))
             {
-                throw new ModelValidationException(
+#pragma warning disable CS0618
+                //TODO: trocar para ModelValidationException e ModelValidationError apos remover ValidationException e ValidationError
+                throw new ValidationException(
                     errors.Select(e => 
-                        new ModelValidationError(e.ErrorKey, e.ErrorMessage)).ToArray());
+                        new ValidationError(e.ErrorKey, e.ErrorMessage)).ToArray());
+#pragma warning restore CS0618
             }
         }
     }
