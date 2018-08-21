@@ -26,7 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Otc.DomainBase.Exceptions" Version="1.0.0-v100-alpha2-build5" />
+    <PackageReference Include="Otc.DomainBase.Exceptions" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
