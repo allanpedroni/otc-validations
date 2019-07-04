@@ -13,16 +13,21 @@ namespace Otc.Validations.Helpers
         /// <typeparam name="T">Tipo do modelo que sera validado</typeparam>
         /// <param name="model">Instancia do modelo que sera validado</param>
         /// <exception cref="ModelValidationException" />
-        public static void ThrowValidationExceptionIfNotValid<T>(T model)
+        public static void ThrowValidationExceptionIfNotValid<T>(params T[] model)
+        {
+            for (int i = 0; i < model.Length; i++)
+            {
+                ValidateModel<T>(model[i]);
+            }
+        }
+
+        private static void ValidateModel<T>(T model)
         {
             if (!ModelValidator.TryValidate(model, out IEnumerable<ValidationResult> errors))
             {
-#pragma warning disable CS0618
-                //TODO: trocar para ModelValidationException e ModelValidationError apos remover ValidationException e ValidationError
-                throw new ValidationException(
-                    errors.Select(e => 
-                        new ValidationError(e.ErrorKey, e.ErrorMessage)).ToArray());
-#pragma warning restore CS0618
+                throw new ModelValidationException(
+                    errors.Select(e =>
+                        new ModelValidationError(e.ErrorKey, e.ErrorMessage)).ToArray());
             }
         }
     }
