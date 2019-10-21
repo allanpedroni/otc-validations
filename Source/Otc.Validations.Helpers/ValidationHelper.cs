@@ -15,6 +15,11 @@ namespace Otc.Validations.Helpers
         /// <exception cref="ModelValidationException" />
         public static void ThrowValidationExceptionIfNotValid<T>(params T[] model)
         {
+            if (model == null)
+            {
+                throw new System.ArgumentNullException(nameof(model));
+            }
+
             for (int i = 0; i < model.Length; i++)
             {
                 ValidateModel<T>(model[i]);
