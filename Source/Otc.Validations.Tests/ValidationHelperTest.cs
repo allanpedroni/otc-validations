@@ -23,7 +23,7 @@ namespace Otc.Validations.Tests
             var modelA = new Model() { SubClass = new SubClass() };
             var modelB = new Model() { SubClass = new SubClass() };
 
-            ValidationHelper.ThrowValidationExceptionIfNotValid(modelA, modelB);
+            ValidationHelper.ThrowValidationExceptionIfNotValid(modelA, modelB.SubClass);
         }
 
         [Fact]

@@ -13,7 +13,7 @@ namespace Otc.Validations.Helpers
         /// <typeparam name="T">Tipo do modelo que sera validado</typeparam>
         /// <param name="model">Instancia do modelo que sera validado</param>
         /// <exception cref="ModelValidationException" />
-        public static void ThrowValidationExceptionIfNotValid<T>(params T[] model)
+        public static void ThrowValidationExceptionIfNotValid(params object[] model)
         {
             if (model == null)
             {
@@ -22,11 +22,11 @@ namespace Otc.Validations.Helpers
 
             for (int i = 0; i < model.Length; i++)
             {
-                ValidateModel<T>(model[i]);
+                ValidateModel(model[i]);
             }
         }
 
-        private static void ValidateModel<T>(T model)
+        private static void ValidateModel(object model)
         {
             if (!ModelValidator.TryValidate(model, out IEnumerable<ValidationResult> errors))
             {
