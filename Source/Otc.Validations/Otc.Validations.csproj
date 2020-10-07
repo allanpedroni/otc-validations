@@ -26,7 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Otc.ComponentModel.Annotations" Version="1.0.1" />
+    <ProjectReference Include="..\..\..\otc-annotations-zerada\src\Otc.ComponentModel.Annotations\src\Otc.ComponentModel.Annotations.csproj" />
   </ItemGroup>
 
 </Project>

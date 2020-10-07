@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Otc.ComponentModel.DataAnnotations;
 using System.Linq;
 using Otc.DomainBase.Exceptions;
+using System;
 
 namespace Otc.Validations.Helpers
 {
@@ -15,25 +16,52 @@ namespace Otc.Validations.Helpers
         /// <exception cref="ModelValidationException" />
         public static void ThrowValidationExceptionIfNotValid(params object[] model)
         {
+            ThrowValidationExceptionIfNotValid(false, model);
+        }
+
+        public static void ThrowValidationExceptionIfNotValid(bool groupKeyErros, params object[] model)
+        {
             if (model == null)
             {
                 throw new System.ArgumentNullException(nameof(model));
             }
 
+            var validationErrorResults = new List<ValidationResult>();
+
             for (int i = 0; i < model.Length; i++)
             {
-                ValidateModel(model[i]);
+                validationErrorResults.AddRange(GetErrosFromModel(model[i]));
+            }
+
+            var erros = GetAllModelValidationErrors(validationErrorResults, groupKeyErros);
+
+            if (validationErrorResults.Any())
+            {
+                throw new ModelValidationException(erros.ToArray());
             }
         }
 
-        private static void ValidateModel(object model)
+        private static IEnumerable<ModelValidationError> GetAllModelValidationErrors(List<ValidationResult> validationResults, bool groupKeyErros)
         {
-            if (!ModelValidator.TryValidate(model, out IEnumerable<ValidationResult> errors))
+            IEnumerable<ValidationResult> validationErrorResults = validationResults;
+
+            if (groupKeyErros)
             {
-                throw new ModelValidationException(
-                    errors.Select(e =>
-                        new ModelValidationError(e.ErrorKey, e.ErrorMessage)).ToArray());
+                validationErrorResults = validationResults
+                    .GroupBy(x => x.ErrorKey)
+                    .Select(y => y.FirstOrDefault())
+                    .Distinct();
             }
+
+            return validationErrorResults
+                .Select(e =>
+                            new ModelValidationError(e.ErrorKey, e.ErrorMessage));
+        }
+
+        private static IEnumerable<ValidationResult> GetErrosFromModel(object model)
+        {
+            ModelValidator.TryValidate(model, out IEnumerable<ValidationResult> errors);
+            return errors;
         }
     }
 }

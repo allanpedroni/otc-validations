@@ -12,18 +12,27 @@ namespace Otc.Validations.Tests
         [Fact]
         public void ThrowValidationExceptionIfNotValid_WithOneParameter()
         {
-            var model = new Model() { SubClass = new SubClass() };
+            var model = new Model() {
+                D = new string[] { "testando" },
+                SubClasses= new List<SubClass>()
+                {
+                    new SubClass() { Nome = "A" },
+                    new SubClass() { Nome = "B" },
+                    new SubClass() { Nome = "C" },
+                }
+            };
 
-            ValidationHelper.ThrowValidationExceptionIfNotValid(model);
+            //TODO: Ajustar a lista pois não está pegando o valor, por exemplo, Name da lista, vindo sempre null
+            ValidationHelper.ThrowValidationExceptionIfNotValid(false, model);
         }
 
         [Fact]
         public void ThrowValidationExceptionIfNotValid_WithMoreThanOneParameter()
         {
-            var modelA = new Model() { SubClass = new SubClass() };
-            var modelB = new Model() { SubClass = new SubClass() };
+            var modelA = new Model() { SubClass = new SubClass() { Nome = "t" }, D = new string[] { "testando" } };
+            var modelB = new Model() { SubClass = null };
 
-            ValidationHelper.ThrowValidationExceptionIfNotValid(modelA, modelB.SubClass);
+            ValidationHelper.ThrowValidationExceptionIfNotValid(modelA, modelB);
         }
 
         [Fact]

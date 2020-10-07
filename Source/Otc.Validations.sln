@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otc.Validations", "Otc.Vali
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otc.Validations.Helpers", "Otc.Validations.Helpers\Otc.Validations.Helpers.csproj", "{0AD13542-B8BB-4243-BC1A-04FE3FB2D247}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otc.Validations.Tests", "Otc.Validations.Tests\Otc.Validations.Tests.csproj", "{9F3E41A6-EB1E-4140-B616-A9D771CC1347}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otc.Validations.Tests", "Otc.Validations.Tests\Otc.Validations.Tests.csproj", "{9F3E41A6-EB1E-4140-B616-A9D771CC1347}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Otc.ComponentModel.Annotations", "..\..\otc-annotations-zerada\src\Otc.ComponentModel.Annotations\src\Otc.ComponentModel.Annotations.csproj", "{69AB09FE-766D-45B2-A8CD-5D6B0D522D3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{9F3E41A6-EB1E-4140-B616-A9D771CC1347}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F3E41A6-EB1E-4140-B616-A9D771CC1347}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F3E41A6-EB1E-4140-B616-A9D771CC1347}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69AB09FE-766D-45B2-A8CD-5D6B0D522D3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69AB09FE-766D-45B2-A8CD-5D6B0D522D3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69AB09FE-766D-45B2-A8CD-5D6B0D522D3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69AB09FE-766D-45B2-A8CD-5D6B0D522D3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
