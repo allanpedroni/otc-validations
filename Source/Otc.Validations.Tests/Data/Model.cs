@@ -14,8 +14,8 @@ namespace Otc.Validations.Tests.Data
         public int A { get; set; }
         public string B { get; set; }
         public string[] C { get; set; }
-        [Required(ErrorKey = "TEsteD", ErrorMessage = "testandoooD")]
-        public String[] D { get; set; }
+        [Required(ErrorKey = "FieldD", ErrorMessage = "testandoooD")]
+        public string[] D { get; set; }
     }
 
     public class SubClass

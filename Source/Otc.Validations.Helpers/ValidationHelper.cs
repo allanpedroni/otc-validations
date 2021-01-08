@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using Otc.ComponentModel.DataAnnotations;
 using System.Linq;
+using Otc.ComponentModel.DataAnnotations;
 using Otc.DomainBase.Exceptions;
-using System;
 
 namespace Otc.Validations.Helpers
 {
@@ -11,7 +10,6 @@ namespace Otc.Validations.Helpers
         /// <summary>
         /// Valida as propriedades do modelo informado e dispara uma ValidationException caso não seja valido.
         /// </summary>
-        /// <typeparam name="T">Tipo do modelo que sera validado</typeparam>
         /// <param name="model">Instancia do modelo que sera validado</param>
         /// <exception cref="ModelValidationException" />
         public static void ThrowValidationExceptionIfNotValid(params object[] model)
@@ -19,6 +17,11 @@ namespace Otc.Validations.Helpers
             ThrowValidationExceptionIfNotValid(false, model);
         }
 
+        /// <summary>
+        /// Valida as propriedades do modelo informado e dispara uma ValidationException caso não seja valido.
+        /// </summary>
+        /// <param name="groupKeyErros">Se deseja agrupa os erros pela chave</param>
+        /// <param name="model">Instancia do modelo que sera validado</param>
         public static void ThrowValidationExceptionIfNotValid(bool groupKeyErros, params object[] model)
         {
             if (model == null)
@@ -41,7 +44,14 @@ namespace Otc.Validations.Helpers
             }
         }
 
-        private static IEnumerable<ModelValidationError> GetAllModelValidationErrors(List<ValidationResult> validationResults, bool groupKeyErros)
+        private static IEnumerable<ValidationResult> GetErrosFromModel(object model)
+        {
+            ModelValidator.TryValidate(model, out IEnumerable<ValidationResult> errors);
+            return errors;
+        }
+
+        private static IEnumerable<ModelValidationError> GetAllModelValidationErrors(
+            IReadOnlyCollection<ValidationResult> validationResults, bool groupKeyErros)
         {
             IEnumerable<ValidationResult> validationErrorResults = validationResults;
 
@@ -54,14 +64,7 @@ namespace Otc.Validations.Helpers
             }
 
             return validationErrorResults
-                .Select(e =>
-                            new ModelValidationError(e.ErrorKey, e.ErrorMessage));
-        }
-
-        private static IEnumerable<ValidationResult> GetErrosFromModel(object model)
-        {
-            ModelValidator.TryValidate(model, out IEnumerable<ValidationResult> errors);
-            return errors;
+                .Select(e => new ModelValidationError(e.ErrorKey, e.ErrorMessage));
         }
     }
 }

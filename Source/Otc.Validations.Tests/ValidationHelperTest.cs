@@ -4,6 +4,7 @@ using Otc.Validations.Tests.Data;
 using System;
 using System.Collections.Generic;
 using Xunit;
+using System.Linq;
 
 namespace Otc.Validations.Tests
 {
@@ -12,7 +13,7 @@ namespace Otc.Validations.Tests
         [Fact]
         public void ThrowValidationExceptionIfNotValid_WithOneParameter()
         {
-            var model = new Model() {
+            Model model = new() {
                 D = new string[] { "testando" },
                 SubClasses= new List<SubClass>()
                 {
@@ -29,10 +30,16 @@ namespace Otc.Validations.Tests
         [Fact]
         public void ThrowValidationExceptionIfNotValid_WithMoreThanOneParameter()
         {
-            var modelA = new Model() { SubClass = new SubClass() { Nome = "t" }, D = new string[] { "testando" } };
-            var modelB = new Model() { SubClass = null };
+            Model modelA = new() { SubClass = new SubClass() { Nome = "t" }, D = new string[] { "testando" } };
+            Model modelB = new() { SubClass = null };
 
-            ValidationHelper.ThrowValidationExceptionIfNotValid(modelA, modelB);
+            var error = Assert.ThrowsAny<ModelValidationException>(() =>
+            {
+                ValidationHelper.ThrowValidationExceptionIfNotValid(modelA, modelB);
+            });
+
+            Assert.Contains("FieldD", error.Errors.FirstOrDefault().Key);
+
         }
 
         [Fact]

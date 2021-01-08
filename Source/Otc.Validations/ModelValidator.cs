@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Otc.ComponentModel.DataAnnotations;
 
@@ -17,7 +17,7 @@ namespace Otc.Validations
         /// <returns>Retorna verdadeiro quando todas as propriedades estiverem válidas e falso quando ao menos uma propriedade estiver inválida</returns>
         public static bool IsValid<T>(T model)
         {
-            return TryValidate(model, out IEnumerable<ValidationResult> erros);
+            return TryValidate(model, out _);
         }
 
         /// <summary>
@@ -30,9 +30,11 @@ namespace Otc.Validations
         public static bool TryValidate<T>(T model, out IEnumerable<ValidationResult> errors)
         {
             if (model == null)
+            {
                 throw new ArgumentNullException(nameof(model));
+            }
 
-            var validationContext = new ValidationContext(model, serviceProvider: null, items: null);
+            var validationContext = new ValidationContext(model);
             var validationResults = new List<ValidationResult>();
             var isValid = Validator.TryValidateObject(model, validationContext, validationResults, true);
 
